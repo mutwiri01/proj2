@@ -61,8 +61,17 @@ router.get('/download/:id', async (req, res) => {
             return res.status(404).json({ message: "Resource not found." });
         }
 
-        const filePath = path.join(__dirname, resource.url); // Get the full file path
-        res.download(filePath, resource.name); // Start the download
+        const filePath = path.join(__dirname, 'uploads', resource.url); // Get the full file path
+        const stat = fs.statSync(filePath);
+        
+        res.writeHead(200, {
+            'Content-Type': 'application/octet-stream',
+            'Content-Length': stat.size,
+            'Content-Disposition': `attachment; filename="${resource.name}"`
+        });
+        
+        const readStream = fs.createReadStream(filePath);
+        readStream.pipe(res); // Stream the file to the response
     } catch (error) {
         console.error("Error downloading file:", error);
         res.status(500).json({ message: "File download failed!" });

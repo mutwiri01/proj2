@@ -9,7 +9,10 @@ const Workflow = () => {
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        const response = await axios.get('http://localhost:9000/api/resources');
+        const response = await axios.get(
+          "https://cloudcpa.vercel.app/api/resources"
+        ); // Updated URL
+        console.log("Fetched Resources:", response.data); 
         setResources(response.data);
       } catch (error) {
         console.error("Error fetching resources:", error);
@@ -31,20 +34,23 @@ const Workflow = () => {
         {/* Resources List Section */}
         <div className="w-full lg:w-3/4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {resources.map((resource) => (
-              <div
-                key={resource._id}
-                className="bg-neutral-900 text-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300"
-              >
-                <h4 className="text-lg font-semibold">{resource.name}</h4>
-                <a
-                  href={`http://localhost:9000/api/download/${resource._id}`} // Download link
-                  className="mt-2 inline-flex items-center bg-orange-500 text-white px-3 py-2 rounded hover:bg-orange-600 transition duration-200"
+            {resources.map((resource) => {
+              console.log("Resource ID:", resource._id); // Log the ID
+              return (
+                <div
+                  key={resource._id}
+                  className="bg-neutral-900 text-white p-4 rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300"
                 >
-                  <FaDownload className="mr-1" /> Download
-                </a>
-              </div>
-            ))}
+                  <h4 className="text-lg font-semibold">{resource.name}</h4>
+                  <a
+                    href={`https://cloudcpa.vercel.app/api/download/${resource._id}`} // Updated download link
+                    className="mt-2 inline-flex items-center bg-orange-500 text-white px-3 py-2 rounded hover:bg-orange-600 transition duration-200"
+                  >
+                    <FaDownload className="mr-1" /> Download
+                  </a>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
