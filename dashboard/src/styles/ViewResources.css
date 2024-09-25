@@ -1,0 +1,31 @@
+/* src/styles/ViewResources.css */
+.resources-container {
+    max-width: 1200px; /* Adjust the max width as needed */
+    width: 100%;
+  }
+  
+  .resource-card {
+    transition: transform 0.2s; /* Add transition for hover effect */
+    display: flex; /* Use flexbox for the resource card */
+    justify-content: space-between; /* Distribute space between items */
+    align-items: center; /* Center items vertically */
+    padding: 16px; /* Ensure some padding for better spacing */
+  }
+  
+  .resource-card:hover {
+    transform: scale(1.05); /* Scale up on hover */
+  }
+  
+  .resource-card a {
+    display: inline-flex; /* Use inline-flex for download link */
+    align-items: center; /* Align items vertically */
+    margin-right: 16px; /* Add margin for spacing */
+  }
+  
+  .resource-card button {
+    background: none; /* Remove background */
+    border: none; /* Remove border */
+    cursor: pointer; /* Change cursor on hover */
+    color: #ef4444; /* Red color for delete icon */
+  }
+  
