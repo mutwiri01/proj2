@@ -15,6 +15,11 @@ app.use(express.json());
 
 connectDB();
 
+// Root route
+app.get('/', (req, res) => {
+    res.status(200).json({ message: "Welcome to the Resource API!" });
+});
+
 // Set up a route for file uploads
 app.post('/upload', upload.single('file'), async (req, res) => {
     try {
