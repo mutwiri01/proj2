@@ -9,8 +9,11 @@ const app = express();
 const port = process.env.PORT || 9000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',  // Adjust as necessary for your frontend
+}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 
 // MongoDB connection
 connectDB();
@@ -23,9 +26,7 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: 'Welcome to the Resource API!' });
 });
 
-
 // Start the server
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
-
