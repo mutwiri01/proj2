@@ -14,10 +14,14 @@ const port = process.env.PORT || 9000;
 const corsOptions = {
   origin: '*', // Allow requests from all origins
   methods: ['GET', 'POST', 'DELETE'], // Allowed methods
+  allowedHeaders: ['Content-Type'], // Allowed headers
   credentials: true, // Include credentials in requests
 };
 
-app.use(cors(corsOptions)); // Enable CORS with options
+// Enable CORS with options
+app.use(cors(corsOptions));
+
+// Middleware for JSON and URL-encoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -66,7 +70,6 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 app.get('/api/resources', async (req, res) => {
   try {
     const resources = await Resource.find();
-    res.set('Access-Control-Allow-Origin', '*');
     res.json(resources);
   } catch (error) {
     return res.status(500).json({ message: 'Failed to fetch resources.' });
