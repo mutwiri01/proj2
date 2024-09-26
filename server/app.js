@@ -36,6 +36,7 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 
 // Upload route
+// Upload route
 app.post('/upload', upload.single('file'), async (req, res) => {
   console.log('Upload route hit');
   try {
@@ -55,13 +56,13 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     res.json({ message: 'File uploaded successfully!', resource: newResource });
   } catch (error) {
     console.error('Error uploading file:', error); // Enhanced error logging
-    res.status(500).json({ message: 'File upload failed!', error: error.message });
+    return res.status(500).json({ message: 'File upload failed!', error: error.message });
   }
 });
 
 // Root route
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the Resource API!' });
+  res.status(200).json({ message: 'Welcome to the Resource API 2!' });
 });
 
 // Start the server
