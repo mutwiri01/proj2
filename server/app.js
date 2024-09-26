@@ -32,31 +32,19 @@ const upload = multer({ storage: storage });
 
 // Upload route
 // Upload route
-app.post("/upload", upload.single("file"), async (req, res) => {
-  console.log("Upload route hit");
-  try {
-    if (!req.file) {
-      return res.status(400).json({ message: "No file uploaded." });
-    }
-
-    const { name } = req.body;
-    const fileUrl = `uploads/${req.file.filename}`;
-
-    // Temporarily comment out the database saving part
-    // const newResource = new Resource({
-    //   name: name,
-    //   url: fileUrl,
-    // });
-    // await newResource.save();
-
-    res.json({ message: "File uploaded successfully!", fileUrl: fileUrl });
-  } catch (error) {
-    console.error("Error uploading file:", error);
-    res
-      .status(500)
-      .json({ message: "File upload failed!", error: error.message });
+app.post('/upload', upload.single('file'), (req, res) => {
+  console.log('Upload route hit');
+  if (!req.file) {
+    return res.status(400).json({ message: 'No file uploaded.' });
   }
+
+  // Log file information for debugging
+  console.log('Uploaded file:', req.file);
+
+  // Respond with success
+  res.json({ message: 'File uploaded successfully!', fileName: req.file.filename });
 });
+
 
 // Root route
 app.get("/", (req, res) => {
