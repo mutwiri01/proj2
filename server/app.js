@@ -1,20 +1,25 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors'); // Import cors
+const cors = require('cors');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
-const { CloudinaryStorage } = require('multer-storage-cloudinary'); // Correct import
-const connectDB = require('./config/db'); // MongoDB connection
-const Resource = require('./models/Resource'); // Import the resource model
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const connectDB = require('./config/db');
+const Resource = require('./models/Resource');
 
-// Initialize Express
 const app = express();
 const port = process.env.PORT || 9000;
 
-// Middleware
-app.use(cors()); // Enable CORS
+// CORS options
+const corsOptions = {
+  origin: 'http://localhost:5173', // Allow requests from this origin
+  methods: ['GET', 'POST', 'DELETE'],
+  credentials: true,
+};
+
+app.use(cors(corsOptions)); // Enable CORS with options
 app.use(express.json());
-app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 
 // MongoDB connection
 connectDB();
@@ -30,8 +35,8 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'uploads', // Optional: folder in Cloudinary
-    allowed_formats: ['pdf', 'jpg', 'png'], // Allowed formats
+    folder: 'uploads',
+    allowed_formats: ['pdf', 'jpg', 'png'],
   },
 });
 
@@ -39,24 +44,20 @@ const upload = multer({ storage: storage });
 
 // Upload route
 app.post('/upload', upload.single('file'), async (req, res) => {
-  console.log('Upload route hit');
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded.' });
     }
 
     const { name } = req.body;
-
-    // Save resource to the database
     const newResource = new Resource({
       name: name,
-      url: req.file.path, // Cloudinary URL
+      url: req.file.path,
     });
 
     await newResource.save();
     res.json({ message: 'File uploaded successfully!', resource: newResource });
   } catch (error) {
-    console.error('Error uploading file:', error);
     return res.status(500).json({ message: 'File upload failed!', error: error.message });
   }
 });
@@ -64,10 +65,9 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 // Route to get all resources
 app.get('/api/resources', async (req, res) => {
   try {
-    const resources = await Resource.find(); // Fetch all resources from the database
-    res.json(resources); // Send resources as response
+    const resources = await Resource.find();
+    res.json(resources);
   } catch (error) {
-    console.error('Error fetching resources:', error);
     return res.status(500).json({ message: 'Failed to fetch resources.' });
   }
 });
@@ -75,14 +75,12 @@ app.get('/api/resources', async (req, res) => {
 // Route to download a specific resource
 app.get('/api/download/:id', async (req, res) => {
   try {
-    const resource = await Resource.findById(req.params.id); // Find resource by ID
+    const resource = await Resource.findById(req.params.id);
     if (!resource) {
       return res.status(404).json({ message: 'Resource not found.' });
     }
-    // Redirect to Cloudinary URL for downloading
-    res.redirect(resource.url); 
+    res.redirect(resource.url);
   } catch (error) {
-    console.error('Error downloading resource:', error);
     return res.status(500).json({ message: 'Failed to download resource.' });
   }
 });
@@ -90,21 +88,19 @@ app.get('/api/download/:id', async (req, res) => {
 // Route to delete a specific resource
 app.delete('/api/resources/:id', async (req, res) => {
   try {
-    const deletedResource = await Resource.findByIdAndDelete(req.params.id); // Delete resource by ID
+    const deletedResource = await Resource.findByIdAndDelete(req.params.id);
     if (!deletedResource) {
       return res.status(404).json({ message: 'Resource not found.' });
     }
     res.json({ message: 'Resource deleted successfully.' });
   } catch (error) {
-    console.error('Error deleting resource:', error);
     return res.status(500).json({ message: 'Failed to delete resource.' });
   }
 });
 
-
 // Root route
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the Resource API 2!' });
+  res.status(200).json({ message: 'Welcome to the Resource API 4!' });
 });
 
 // Start the server
