@@ -1,31 +1,32 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Dashboard from "./components/Dashboard"; // New component
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const connectDB = require('./config/db');  // MongoDB connection
+const uploadRoute = require('./upload');  // Import the router from upload.js
 
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import Sidebar from "./components/Sidebar";
-import "./App.css";
-import AddResource from './components/AddResource';
-import ViewResources from "./components/ViewResources";
+// Initialize Express
+const app = express();
+const port = process.env.PORT || 9000;
 
-const App = () => {
-  return (
-    <Router>
-      {/* Flex container to hold sidebar and main content */}
-      <div className="app-container">
-        <Sidebar />
-        {/* Main content */}
-        <div className="main-content">
-          <Routes>
-            <Route path="" element={<Dashboard />} />
-            <Route path="/add-resource" element={<AddResource/>} />
-            <Route path="/view-resources" element={<ViewResources/>} />
-          </Routes>
-        </div>
-      </div>
-      <ToastContainer position="top-center" />
-    </Router>
-  );
-};
+// Middleware
+app.use(cors({
+  origin: 'http://localhost:5173',  // Adjust as necessary for your frontend
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true })); // For parsing application/x-www-form-urlencoded
 
-export default App;
+// MongoDB connection
+connectDB();
+
+// Use the upload route
+app.use('/api', uploadRoute);  // Mount the upload route under '/api'
+
+// Root route
+app.get('/', (req, res) => {
+  res.status(200).json({ message: 'Welcome to the Resource API!' });
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
