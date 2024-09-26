@@ -48,7 +48,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 // Root route
 app.get("/", (req, res) => {
-  res.status(200).json({ message: "Welcome to the Resource API! 12" });
+  res.status(200).json({ message: "Welcome to the Resource API! 13" });
 });
 
 // Start the server
