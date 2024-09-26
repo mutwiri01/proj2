@@ -1,10 +1,11 @@
 import { useState, useRef } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
+import "react-toastify/dist/ReactToastify.css"; // Import toast styles
 
 const AddResource = () => {
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
-  const [uploadStatus, setUploadStatus] = useState("");
   const fileInputRef = useRef();
 
   const handleFileChange = (e) => {
@@ -14,7 +15,7 @@ const AddResource = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file || !name) {
-      setUploadStatus("Please provide both a resource name and file.");
+      toast.error("Please provide both a resource name and file."); // Error toast
       return;
     }
 
@@ -23,24 +24,21 @@ const AddResource = () => {
     formData.append("name", name);
 
     try {
-      const response = await axios.post("https://cloudcpa.vercel.app/api/upload", formData, {
+      toast.info("Uploading file..."); // Show loading toast
+      const response = await axios.post("https://cpacloud.vercel.app/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      setUploadStatus("File uploaded successfully!");
+      toast.success("File uploaded successfully!"); // Success toast
       setFile(null);
       setName("");
-      fileInputRef.current.value = null; 
-
-      setTimeout(() => {
-        setUploadStatus("");
-      }, 3000);
+      fileInputRef.current.value = null;
 
       console.log("Response:", response.data);
     } catch (error) {
-      setUploadStatus("File upload failed! Please try again.");
+      toast.error("File upload failed! Please try again."); // Error toast
       console.error("Error uploading file:", error);
     }
   };
@@ -49,7 +47,6 @@ const AddResource = () => {
     <div className="add-resource min-h-screen bg-gray-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-lg w-full space-y-8">
         <h1 className="text-3xl font-bold text-center text-gray-900">Add a New Resource</h1>
-        {uploadStatus && <p className="text-center text-red-600">{uploadStatus}</p>}
         <form onSubmit={handleSubmit} className="mt-8 space-y-6 bg-white p-6 rounded-lg shadow-lg" encType="multipart/form-data">
           <div className="space-y-1">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
@@ -91,6 +88,7 @@ const AddResource = () => {
           </div>
         </form>
       </div>
+      <ToastContainer /> {/* Add the ToastContainer here */}
     </div>
   );
 };
