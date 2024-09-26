@@ -62,7 +62,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
 // Root route
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the Resource API 2!' });
+  res.status(200).json({ message: 'Welcome to the Resource API 3!' });
 });
 
 // Start the server
