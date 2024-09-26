@@ -10,11 +10,11 @@ const Resource = require('./models/Resource');
 const app = express();
 const port = process.env.PORT || 9000;
 
-// CORS options
+// CORS options - allow all origins
 const corsOptions = {
-  origin: 'http://localhost:5173', // Allow requests from this origin
-  methods: ['GET', 'POST', 'DELETE'],
-  credentials: true,
+  origin: '*', // Allow requests from all origins
+  methods: ['GET', 'POST', 'DELETE'], // Allowed methods
+  credentials: true, // Include credentials in requests
 };
 
 app.use(cors(corsOptions)); // Enable CORS with options

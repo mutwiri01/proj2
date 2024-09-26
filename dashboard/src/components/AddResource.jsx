@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify"; // Import ToastContainer and toast
-import "react-toastify/dist/ReactToastify.css"; // Import toast styles
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AddResource = () => {
   const [file, setFile] = useState(null);
@@ -15,7 +15,7 @@ const AddResource = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!file || !name) {
-      toast.error("Please provide both a resource name and file."); // Error toast
+      toast.error("Please provide both a resource name and file.");
       return;
     }
 
@@ -24,22 +24,22 @@ const AddResource = () => {
     formData.append("name", name);
 
     try {
-      toast.info("Uploading file..."); // Show loading toast
+      toast.info("Uploading file...");
       const response = await axios.post("https://cpacloud.vercel.app/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
 
-      toast.success("File uploaded successfully!"); // Success toast
+      toast.success("File uploaded successfully!");
       setFile(null);
       setName("");
       fileInputRef.current.value = null;
 
       console.log("Response:", response.data);
     } catch (error) {
-      toast.error("File upload failed! Please try again."); // Error toast
-      console.error("Error uploading file:", error);
+      toast.error("File upload failed! Please try again.");
+      console.error("Error uploading file:", error.response ? error.response.data : error.message);
     }
   };
 
@@ -49,9 +49,7 @@ const AddResource = () => {
         <h1 className="text-3xl font-bold text-center text-gray-900">Add a New Resource</h1>
         <form onSubmit={handleSubmit} className="mt-8 space-y-6 bg-white p-6 rounded-lg shadow-lg" encType="multipart/form-data">
           <div className="space-y-1">
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-              Resource Name:
-            </label>
+            <label htmlFor="name" className="block text-sm font-medium text-gray-700">Resource Name:</label>
             <input
               type="text"
               id="name"
@@ -64,9 +62,7 @@ const AddResource = () => {
             />
           </div>
           <div className="space-y-1">
-            <label htmlFor="file" className="block text-sm font-medium text-gray-700">
-              Upload PDF File:
-            </label>
+            <label htmlFor="file" className="block text-sm font-medium text-gray-700">Upload PDF File:</label>
             <input
               type="file"
               id="file"
@@ -88,7 +84,7 @@ const AddResource = () => {
           </div>
         </form>
       </div>
-      <ToastContainer /> {/* Add the ToastContainer here */}
+      <ToastContainer />
     </div>
   );
 };
