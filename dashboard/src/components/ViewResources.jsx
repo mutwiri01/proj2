@@ -44,7 +44,7 @@ const ViewResources = () => {
             <h2 className="text-xl font-semibold">{resource.name}</h2>
             <div className="flex items-center">
               <a
-                href={`https://cloudcpa.vercel.app/api/download/${resource._id}`}
+                href={`https://cloudcpa.vercel.app/api/download/${resource._id}`} // Updated URL for downloading
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-500 flex items-center mr-4"
