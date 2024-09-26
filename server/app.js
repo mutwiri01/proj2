@@ -11,15 +11,14 @@ const app = express();
 const port = process.env.PORT || 9000;
 
 // CORS options - allow all origins
-const corsOptions = {
-  origin: '*', // Allow requests from all origins
-  methods: ['GET', 'POST', 'DELETE'], // Allowed methods
-  allowedHeaders: ['Content-Type'], // Allowed headers
-  credentials: true, // Include credentials in requests
-};
+app.use(cors({
+  origin: ['http://localhost:5173'], // Change this to the specific origin if needed
+  methods: ['GET', 'POST', 'DELETE'],
+  credentials: true,
+  optionsSuccessStatus: 200, // For legacy browser support
+}));
 
-// Enable CORS with options
-app.use(cors(corsOptions));
+
 
 // Middleware for JSON and URL-encoded bodies
 app.use(express.json());
@@ -68,6 +67,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
 // Route to get all resources
 app.get('/api/resources', async (req, res) => {
+  console.log('Request received for /api/resources');
   try {
     const resources = await Resource.find();
     res.json(resources);
@@ -75,6 +75,7 @@ app.get('/api/resources', async (req, res) => {
     return res.status(500).json({ message: 'Failed to fetch resources.' });
   }
 });
+
 
 // Route to download a specific resource
 app.get('/api/download/:id', async (req, res) => {
