@@ -28,7 +28,7 @@ const AddResource = () => {
 
     try {
       // Make POST request to upload the file and resource name
-      const response = await axios.post("http://localhost:9000/upload", formData, {
+      const response = await axios.post("https://cloudcpa.vercel.app/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

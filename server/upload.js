@@ -1,5 +1,10 @@
+const express = require('express');
 const multer = require('multer');
 const path = require('path');
+const Resource = require('./models/Resource');  // Import the resource model
+
+// Create a router instance
+const router = express.Router();
 
 // Set up Multer storage
 const storage = multer.diskStorage({
@@ -15,4 +20,29 @@ const storage = multer.diskStorage({
 // Set up Multer middleware
 const upload = multer({ storage: storage });
 
-module.exports = upload;
+// Upload route
+router.post('/upload', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded.' });
+    }
+
+    const { name } = req.body;
+    const fileUrl = `uploads/${req.file.filename}`;
+
+    // Save resource to the database
+    const newResource = new Resource({
+      name: name,
+      url: fileUrl,
+    });
+
+    await newResource.save();
+    res.json({ message: 'File uploaded successfully!', resource: newResource });
+  } catch (error) {
+    console.error('Error uploading file:', error);
+    res.status(500).json({ message: 'File upload failed!', error: error.message });
+  }
+});
+
+// Export the router
+module.exports = router;

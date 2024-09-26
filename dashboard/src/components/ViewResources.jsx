@@ -11,7 +11,7 @@ const ViewResources = () => {
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        const response = await axios.get("http://localhost:9000/api/resources");
+        const response = await axios.get("https://cloudcpa.vercel.app/api/resources");
         setResources(response.data);
       } catch (err) {
         setError("Failed to load resources.");
@@ -25,7 +25,7 @@ const ViewResources = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:9000/api/resources/${id}`);
+      await axios.delete(`https://cloudcpa.vercel.app/api/resources/${id}`);
       setResources(resources.filter((resource) => resource._id !== id));
     } catch (err) {
       console.error("Failed to delete resource", err);
@@ -43,7 +43,12 @@ const ViewResources = () => {
           <div key={resource._id} className="resource-card bg-white rounded-lg shadow-lg flex justify-between items-center">
             <h2 className="text-xl font-semibold">{resource.name}</h2>
             <div className="flex items-center">
-              <a href={`http://localhost:9000/api/download/${resource._id}`} target="_blank" rel="noopener noreferrer" className="text-blue-500 flex items-center mr-4">
+              <a
+                href={`https://cloudcpa.vercel.app/api/download/${resource._id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 flex items-center mr-4"
+              >
                 <FaDownload className="mr-1" /> {/* Download icon */}
                 Download
               </a>
