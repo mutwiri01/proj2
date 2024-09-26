@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const cloudinary = require('cloudinary').v2;
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
@@ -11,7 +12,7 @@ const port = process.env.PORT || 9000;
 
 // CORS options - allow all origins
 
-
+app.use(cors());
 
 // Middleware for JSON and URL-encoded bodies
 app.use(express.json());
