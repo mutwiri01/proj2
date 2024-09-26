@@ -66,6 +66,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 app.get('/api/resources', async (req, res) => {
   try {
     const resources = await Resource.find();
+    res.set('Access-Control-Allow-Origin', '*');
     res.json(resources);
   } catch (error) {
     return res.status(500).json({ message: 'Failed to fetch resources.' });

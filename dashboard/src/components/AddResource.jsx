@@ -84,7 +84,16 @@ const AddResource = () => {
           </div>
         </form>
       </div>
-      <ToastContainer />
+      <ToastContainer
+        position="top-right" // Change position as necessary
+        autoClose={5000} // Toast auto close after 5 seconds
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        draggable
+        pauseOnFocusLoss
+        limit={3} // Limit number of concurrent toasts
+      />
     </div>
   );
 };
