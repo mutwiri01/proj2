@@ -10,15 +10,13 @@ const Resource = require('./models/Resource');
 const app = express();
 const port = process.env.PORT || 9000;
 
-// CORS options - allow all origins
+// CORS options - allow all origins (already globally applied)
 app.use(cors({
-  origin: '*', // Allow all origins for testing purposes
+  origin: '*',
   methods: ['GET', 'POST', 'DELETE'],
   credentials: true,
   optionsSuccessStatus: 200,
 }));
-
-
 
 // Middleware for JSON and URL-encoded bodies
 app.use(express.json());
@@ -45,8 +43,16 @@ const storage = new CloudinaryStorage({
 
 const upload = multer({ storage: storage });
 
+// Apply CORS headers manually to each route
+
 // Upload route
 app.post('/upload', upload.single('file'), async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
+
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded.' });
@@ -67,7 +73,13 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
 // Route to get all resources
 app.get('/api/resources', async (req, res) => {
-  console.log('Request received for /api/resources');
+  // Add CORS headers here
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
+
   try {
     const resources = await Resource.find();
     res.json(resources);
@@ -76,9 +88,14 @@ app.get('/api/resources', async (req, res) => {
   }
 });
 
-
 // Route to download a specific resource
 app.get('/api/download/:id', async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
+
   try {
     const resource = await Resource.findById(req.params.id);
     if (!resource) {
@@ -92,6 +109,12 @@ app.get('/api/download/:id', async (req, res) => {
 
 // Route to delete a specific resource
 app.delete('/api/resources/:id', async (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
+
   try {
     const deletedResource = await Resource.findByIdAndDelete(req.params.id);
     if (!deletedResource) {
@@ -105,7 +128,13 @@ app.delete('/api/resources/:id', async (req, res) => {
 
 // Root route
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the Resource API 5!' });
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  res.setHeader("Access-Control-Max-Age", "1800");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
+
+  res.status(200).json({ message: 'Welcome to the Resource API 6!' });
 });
 
 // Start the server
