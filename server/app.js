@@ -11,8 +11,14 @@ const app = express();
 const port = process.env.PORT || 9000;
 
 // CORS options - allow all origins
+app.use(cors({
+  origin: '*', // Allow all origins for testing purposes
+  methods: ['GET', 'POST', 'DELETE'],
+  credentials: true,
+  optionsSuccessStatus: 200,
+}));
 
-app.use(cors());
+
 
 // Middleware for JSON and URL-encoded bodies
 app.use(express.json());
@@ -99,7 +105,7 @@ app.delete('/api/resources/:id', async (req, res) => {
 
 // Root route
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the Resource API 4!' });
+  res.status(200).json({ message: 'Welcome to the Resource API 5!' });
 });
 
 // Start the server
