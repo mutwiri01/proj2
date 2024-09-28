@@ -10,9 +10,9 @@ const Workflow = () => {
     const fetchResources = async () => {
       try {
         const response = await axios.get(
-          "https://cloudcpa.vercel.app/api/resources"
+          "https://cpacloud.vercel.app/api/resources"
         ); // Updated URL
-        console.log("Fetched Resources:", response.data); 
+        console.log("Fetched Resources:", response.data);
         setResources(response.data);
       } catch (error) {
         console.error("Error fetching resources:", error);
@@ -43,8 +43,10 @@ const Workflow = () => {
                 >
                   <h4 className="text-lg font-semibold">{resource.name}</h4>
                   <a
-                    href={`https://cloudcpa.vercel.app/api/download/${resource._id}`} // Updated download link
+                    href={resource.url} // Direct Cloudinary URL for download
                     className="mt-2 inline-flex items-center bg-orange-500 text-white px-3 py-2 rounded hover:bg-orange-600 transition duration-200"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <FaDownload className="mr-1" /> Download
                   </a>

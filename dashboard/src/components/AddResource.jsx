@@ -9,7 +9,16 @@ const AddResource = () => {
   const fileInputRef = useRef();
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    const maxSize = 5 * 1024 * 1024; // 5 MB limit
+
+    if (selectedFile && selectedFile.size > maxSize) {
+      toast.error("File size exceeds 5 MB limit.");
+      setFile(null);
+      fileInputRef.current.value = null; // Reset the input
+    } else {
+      setFile(selectedFile);
+    }
   };
 
   const handleSubmit = async (e) => {

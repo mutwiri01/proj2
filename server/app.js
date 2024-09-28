@@ -30,9 +30,10 @@ cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
+  secure: true,
 });
 
-// Set up Multer storage with Cloudinary
+// Set up Multer storage with Cloudinary and file size limit
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
@@ -43,7 +44,11 @@ const storage = new CloudinaryStorage({
   },
 });
 
-const upload = multer({ storage: storage });
+// Set file size limit to 5 MB (adjust as needed)
+const upload = multer({ 
+  storage: storage, 
+  limits: { fileSize: 105 * 1024 * 1024 } // Limit set to 105 MB
+});
 
 // Upload route
 app.post('/upload', upload.single('file'), async (req, res) => {
@@ -90,7 +95,7 @@ app.delete('/api/resources/:id', async (req, res) => {
 
 // Root route
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the Resource API 7!' });
+  res.status(200).json({ message: 'Welcome to the Resource API!' });
 });
 
 // Start the server
