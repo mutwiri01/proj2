@@ -19,8 +19,8 @@ app.use(cors({
 }));
 
 // Middleware for JSON and URL-encoded bodies
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '110mb' }));
+app.use(express.urlencoded({ limit: '110mb', extended: true }));
 
 // MongoDB connection
 connectDB();
@@ -95,7 +95,7 @@ app.delete('/api/resources/:id', async (req, res) => {
 
 // Root route
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to the Resource API!' });
+  res.status(200).json({ message: 'Welcome to the Resource API 8' });
 });
 
 // Start the server
