@@ -11,7 +11,7 @@ const ViewResources = () => {
   useEffect(() => {
     const fetchResources = async () => {
       try {
-        const response = await axios.get("https://cloudcpa.vercel.app/api/resources");
+        const response = await axios.get("https://cpacloud.vercel.app/api/resources");
         setResources(response.data);
       } catch (err) {
         setError("Failed to load resources.");
@@ -25,7 +25,7 @@ const ViewResources = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://cloudcpa.vercel.app/api/resources/${id}`);
+      await axios.delete(`https://cpacloud.vercel.app/api/resources/${id}`);
       setResources(resources.filter((resource) => resource._id !== id));
     } catch (err) {
       console.error("Failed to delete resource", err);
@@ -38,27 +38,31 @@ const ViewResources = () => {
   return (
     <div className="view-resources min-h-screen bg-gray-100 flex flex-col items-center py-12 px-4">
       <h1 className="text-3xl font-bold mb-6">Available Resources</h1>
-      <div className="resources-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {resources.map((resource) => (
-          <div key={resource._id} className="resource-card bg-white rounded-lg shadow-lg flex justify-between items-center">
-            <h2 className="text-xl font-semibold">{resource.name}</h2>
-            <div className="flex items-center">
-              <a
-                href={`https://cloudcpa.vercel.app/api/download/${resource._id}`} // Updated URL for downloading
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 flex items-center mr-4"
-              >
-                <FaDownload className="mr-1" /> {/* Download icon */}
-                Download
-              </a>
-              <button onClick={() => handleDelete(resource._id)}>
-                <FaTrash size={20} /> {/* Delete icon */}
-              </button>
+      {resources.length === 0 ? (
+        <p className="text-xl text-gray-600">No resources available</p>
+      ) : (
+        <div className="resources-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {resources.map((resource) => (
+            <div key={resource._id} className="resource-card bg-white rounded-lg shadow-lg flex justify-between items-center p-4">
+              <h2 className="text-xl font-semibold">{resource.name}</h2>
+              <div className="flex items-center">
+                <a
+                  href={resource.url} // Direct Cloudinary URL for download
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 flex items-center mr-4"
+                >
+                  <FaDownload className="mr-1" /> {/* Download icon */}
+                  Download
+                </a>
+                <button onClick={() => handleDelete(resource._id)}>
+                  <FaTrash size={20} /> {/* Delete icon */}
+                </button>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

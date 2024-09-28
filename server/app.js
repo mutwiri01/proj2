@@ -10,7 +10,7 @@ const Resource = require('./models/Resource');
 const app = express();
 const port = process.env.PORT || 9000;
 
-// CORS options - allow all origins (already globally applied)
+// CORS options - allow all origins
 app.use(cors({
   origin: '*',
   methods: ['GET', 'POST', 'DELETE'],
@@ -36,23 +36,17 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: 'uploads',
+    folder: 'uploads',  // Folder in Cloudinary
     allowed_formats: ['pdf', 'jpg', 'png'],
+    resource_type: 'auto', // Automatically detect file type
+    access_mode: 'public', // Ensure files are publicly accessible
   },
 });
 
 const upload = multer({ storage: storage });
 
-// Apply CORS headers manually to each route
-
 // Upload route
 app.post('/upload', upload.single('file'), async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Max-Age", "1800");
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
-  res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
-
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded.' });
@@ -61,7 +55,7 @@ app.post('/upload', upload.single('file'), async (req, res) => {
     const { name } = req.body;
     const newResource = new Resource({
       name: name,
-      url: req.file.path,
+      url: req.file.path,  // Cloudinary URL
     });
 
     await newResource.save();
@@ -73,13 +67,6 @@ app.post('/upload', upload.single('file'), async (req, res) => {
 
 // Route to get all resources
 app.get('/api/resources', async (req, res) => {
-  // Add CORS headers here
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Max-Age", "1800");
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
-  res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
-
   try {
     const resources = await Resource.find();
     res.json(resources);
@@ -88,33 +75,8 @@ app.get('/api/resources', async (req, res) => {
   }
 });
 
-// Route to download a specific resource
-app.get('/api/download/:id', async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Max-Age", "1800");
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
-  res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
-
-  try {
-    const resource = await Resource.findById(req.params.id);
-    if (!resource) {
-      return res.status(404).json({ message: 'Resource not found.' });
-    }
-    res.redirect(resource.url);
-  } catch (error) {
-    return res.status(500).json({ message: 'Failed to download resource.' });
-  }
-});
-
 // Route to delete a specific resource
 app.delete('/api/resources/:id', async (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Max-Age", "1800");
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
-  res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
-
   try {
     const deletedResource = await Resource.findByIdAndDelete(req.params.id);
     if (!deletedResource) {
@@ -128,13 +90,7 @@ app.delete('/api/resources/:id', async (req, res) => {
 
 // Root route
 app.get('/', (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader("Access-Control-Max-Age", "1800");
-  res.setHeader("Access-Control-Allow-Headers", "content-type");
-  res.setHeader("Access-Control-Allow-Methods", "PUT, POST, GET, DELETE, PATCH, OPTIONS");
-
-  res.status(200).json({ message: 'Welcome to the Resource API 6!' });
+  res.status(200).json({ message: 'Welcome to the Resource API 7!' });
 });
 
 // Start the server

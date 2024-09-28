@@ -74,26 +74,15 @@ const AddResource = () => {
               required
             />
           </div>
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-300 ease-in-out"
-            >
-              Upload Resource
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Upload Resource
+          </button>
         </form>
       </div>
-      <ToastContainer
-        position="top-right" // Change position as necessary
-        autoClose={5000} // Toast auto close after 5 seconds
-        hideProgressBar={false}
-        closeOnClick
-        pauseOnHover
-        draggable
-        pauseOnFocusLoss
-        limit={3} // Limit number of concurrent toasts
-      />
+      <ToastContainer />
     </div>
   );
 };
