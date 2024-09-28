@@ -10,7 +10,7 @@ const AddResource = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    const maxSize = 5 * 1024 * 1024; // 5 MB limit
+    const maxSize = 105 * 1024 * 1024; // 105 MB limit
 
     if (selectedFile && selectedFile.size > maxSize) {
       toast.error("File size exceeds 5 MB limit.");
