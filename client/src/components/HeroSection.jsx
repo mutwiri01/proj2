@@ -6,12 +6,12 @@ const HeroSection = () => {
     <div className="flex flex-col items-center mt-6 lg:mt-20">
       <h1 className="text-4xl sm:text-6xl lg:text-7xl text-center tracking-wide">
         WE OFFER
-        <span className="bg-gradient-to-r from-orange-500 to-red-800 text-transparent bg-clip-text">
+        <span className="bg-gradient-to-r from-blue-500 to-blue-800 text-transparent bg-clip-text">
           {" "}
           CPA RESOURCES IN :
         </span>
         <br />
-            <TypeAnimation className="bg-gradient-to-r from-orange-500 to-red-800 text-transparent bg-clip-text"
+            <TypeAnimation className="bg-gradient-to-r from-blue-500 to-blue-800 text-transparent bg-clip-text"
               sequence={[
                 "Financial Accounting",
                 1000,
@@ -45,7 +45,7 @@ const HeroSection = () => {
       <div className="flex justify-center my-10">
         <a
           href="#FeatureSection"
-          className="bg-gradient-to-r from-orange-500 to-orange-800 py-3 px-4 mx-3 rounded-md"
+          className="bg-gradient-to-r from-blue-500 to-blue-800 py-3 px-4 mx-3 rounded-md"
         >
           BROWSE OUR RESOURCES
         </a>

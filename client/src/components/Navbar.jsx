@@ -42,7 +42,7 @@ const NavbarResources = () => {
             <ul>
               {navItems.map((item, index) => (
                 <li key={index} className="py-4">
-                  <a href={item.href} className="text-white hover:text-orange-500">{item.label}</a>
+                  <a href={item.href} className="text-white hover:text-blue-500">{item.label}</a>
                 </li>
               ))}
             </ul>

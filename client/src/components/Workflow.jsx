@@ -26,7 +26,7 @@ const Workflow = () => {
     <div id="free-resources" className="mt-20">
       <h2 className="text-3xl sm:text-5xl lg:text-6xl text-center mt-6 tracking-wide">
         Free resources{" "}
-        <span className="bg-gradient-to-r from-orange-500 to-orange-800 text-transparent bg-clip-text">
+        <span className="bg-gradient-to-r from-blue-500 to-blue-800 text-transparent bg-clip-text">
           to aid your studies.
         </span>
       </h2>
@@ -44,7 +44,7 @@ const Workflow = () => {
                   <h4 className="text-lg font-semibold">{resource.name}</h4>
                   <a
                     href={resource.url} // Direct Cloudinary URL for download
-                    className="mt-2 inline-flex items-center bg-orange-500 text-white px-3 py-2 rounded hover:bg-orange-600 transition duration-200"
+                    className="mt-2 inline-flex items-center bg-blue-500 text-white px-3 py-2 rounded hover:bg-blue-600 transition duration-200"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

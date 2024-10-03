@@ -19,11 +19,11 @@ const FeatureSection = () => {
   return (
     <div  id="FeatureSection"className="relative mt-20 border-b border-neutral-800 min-h-[800px]">
       <div className="text-center">
-        <span className="bg-neutral-900 text-orange-500 rounded-full h-6 text-sm font-medium px-2 py-1 uppercase">
+        <span className="bg-neutral-900 text-blue-500 rounded-full h-6 text-sm font-medium px-2 py-1 uppercase">
           OUR RESOURCES
         </span>
         <h2 className="text-3xl sm:text-5xl lg:text-6xl mt-10 lg:mt-20 tracking-wide">
-          <span className="bg-gradient-to-r from-orange-500 to-orange-800 text-transparent bg-clip-text">
+          <span className="bg-gradient-to-r from-blue-500 to-blue-800 text-transparent bg-clip-text">
             CPA CATALOG
           </span>
         </h2>
@@ -39,7 +39,7 @@ const FeatureSection = () => {
           />
         </div>
         <div className="w-full lg:w-1/2">
-          <h3 className="text-xl font-bold text-orange-500 mb-5 text-center lg:text-left">
+          <h3 className="text-xl font-bold text-blue-500 mb-5 text-center lg:text-left">
             Foundation Level
           </h3>
           <div className="flex flex-wrap justify-center lg:justify-start gap-6">
@@ -72,7 +72,7 @@ const FeatureSection = () => {
           />
         </div>
         <div className="w-full lg:w-1/2">
-          <h3 className="text-xl font-bold text-orange-500 mb-5 text-center lg:text-left">
+          <h3 className="text-xl font-bold text-blue-500 mb-5 text-center lg:text-left">
             Intermediate Level
           </h3>
           <div className="flex flex-wrap justify-center lg:justify-start gap-6">
@@ -104,7 +104,7 @@ const FeatureSection = () => {
           />
         </div>
         <div className="w-full lg:w-1/2">
-          <h3 className="text-xl font-bold text-orange-500 mb-5 text-center lg:text-left">
+          <h3 className="text-xl font-bold text-blue-500 mb-5 text-center lg:text-left">
             KASNEB Pastpapers (Foundation Level)
           </h3>
           <div className="flex flex-wrap justify-center lg:justify-start gap-6">
@@ -137,7 +137,7 @@ const FeatureSection = () => {
           />
         </div>
         <div className="w-full lg:w-1/2">
-          <h3 className="text-xl font-bold text-orange-500 mb-5 text-center lg:text-left">
+          <h3 className="text-xl font-bold text-blue-500 mb-5 text-center lg:text-left">
             KASNEB Pastpapers (Intermediate Level)
           </h3>
           <div className="flex flex-wrap justify-center lg:justify-start gap-6">

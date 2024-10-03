@@ -7,12 +7,12 @@ const Footer = () => {
           <h1 className="text-lg font-bold">TILAS TOBIAS</h1>
           <p className="text-sm">Nairobi, Kenya</p>
           <p className="text-sm">
-            <a href="tel:+254700639201" className="text-orange-500">
+            <a href="tel:+254700639201" className="text-blue-500">
               0700639201
             </a>
           </p>
           <p className="text-sm">
-            <a href="mailto:tilasray@gmail.com" className="text-orange-500">
+            <a href="mailto:tilasray@gmail.com" className="text-blue-500">
               tilasray@gmail.com
             </a>
           </p>
